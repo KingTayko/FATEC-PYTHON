@@ -1,0 +1,68 @@
+#CLASSE PAI
+
+class Pessoa:
+    #pass 
+
+    #METODO CONSTRUTOR
+    def __init__(self, nome, dataNascimento, idade=0):
+        #ATRIBUTO
+        self.nm = nome
+        self.dtNasc = dataNascimento
+        self.idd = idade
+        
+    #Criando função
+    #Mesmo que sua funçao nao receba parametros voce deve colocar a palvra self dentro do parentesses
+    def andar(self):
+        print("Andando...")
+    
+    def peidar(self):
+        print("Peidando...")
+        
+    def calcIdade(self, anoAtual):
+        self.idd = anoAtual - self.dtNasc
+        return self.idd
+
+#CLASSE FILHA
+#Voce deve colocar o nome da classe pai dentro do parentesses da criação da classe filha
+class Aluno(Pessoa):
+    def __init__(self, nome, dataNascimento, ma, idade=0):
+        #junçao da classe pai com a classe filha, para nao ter q repetir a criaçao dos atributos
+        Pessoa.__init__(self, nome, dataNascimento, idade)
+        self.matricula = ma
+
+    def andar(self):
+        print("Aluno esta andando...")
+    
+            
+#OBJETO
+#p = Pessoa()
+
+#p.nome = "Maria"
+#p.idade = 18
+#p.sexo = "Feminino"
+
+#print( p.nome ,"\n",p.idade)
+
+
+#Mostrando no metodo CONSTRUTOR
+p = Pessoa("Maria", 2000)
+a = Aluno("Fernanda", 2008, 313)
+
+print(p.nm)
+
+
+#chamando funcao
+#nao é necessario utilizar o print() antes
+p.andar()
+p.peidar()
+print("Tem" , p.calcIdade(2024))
+
+print(a.nm , "Tem" ,a.calcIdade(2024), a.matricula)
+a.andar()
+
+
+
+
+
+
+--Feito e Idealizado por KingTayko

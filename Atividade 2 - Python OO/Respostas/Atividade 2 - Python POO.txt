@@ -1,0 +1,167 @@
+1-)
+class Carro:
+    
+    def __init__(self, marca, modelo, ano, quilometragem):
+        self.marca = marca
+        self.modelo = modelo
+        self.ano = ano
+        self.quilometragem = quilometragem
+    
+    def informacoes (self):
+        informacoes = [self.marca, self.modelo, self.ano, self.quilometragem]
+        print(informacoes)
+        
+    def andar (self, distancia):
+        
+        if distancia < 1000: 
+            self.quilometragem = 0
+        elif distancia > 1000 and distancia < 2000:
+            self.quilometragem = self.quilometragem + 1
+            print("Você andou mais 1km")
+        elif distancia > 2000 and distancia < 3000:
+            self.quilometragem = self.quilometragem + 2
+            print("Você andou mais 2km")
+        elif distancia > 3000 and distancia < 4000:
+            self.quilometragem = self.quilometragem + 3
+            print("Você andou mais 3km")
+        else:
+            self.quilometragem = self.quilometragem + 4
+            print("Você andou mais 4km")
+            
+        return self.quilometragem
+    
+class CarroEletrico (Carro):
+    def __init__(self, marca, modelo, ano, quilometragem, autonomia):
+        Carro.__init__(self, marca, modelo, ano, quilometragem)
+        self.autonomia = autonomia
+        
+    def informacoes (self):
+        informacoes = [self.marca, self.modelo, self.ano, self.quilometragem, self.autonomia]
+        print(informacoes)
+        
+carro1 = Carro("Toyota", "Ethios", "2010", 50000)
+carro1.informacoes()
+carro1.andar(3000)
+carro1.informacoes()
+
+carro2 = CarroEletrico("Renault", "Kwid E-Tech", "2023", 0, 0)
+carro2.informacoes()
+carro2.andar(3000)
+carro2.informacoes()
+
+
+
+2-)
+#Criação da Classe Pai (Abstracao):
+class Produto: 
+    
+    #Construtor da Classe Pai:
+    def __init__(self, nome, preco, qtEstoque):
+        self.nome = nome
+        self.preco = preco
+        self.qtEstoque = qtEstoque
+    
+    #Método que contém lista com todos os atributos dos objetos da classe pai:
+    def informacoes(self):
+        informacoes = [self.nome, self.preco, self.qtEstoque]
+        print(informacoes)
+    
+    #Método vender: retira a quantidade passada no parâmetro do estoque do obj:
+    def vender(self, qtVendida):
+        self.qtEstoque = self.qtEstoque - qtVendida
+        
+        if self.qtEstoque > 0:
+            print("Produto vendido!")
+        else:
+            print("Produto Esgotado!")
+            self.qtEstoque = 0
+            
+        return self.qtEstoque
+    
+
+#Criação da Classe Filha (Herança):
+class ProdutoImportado (Produto):
+    
+    #Construtor da classe filha (contém referência ao construtor da pai):
+    def __init__(self, nome, preco, qtEstoque, pais_origem):
+        Produto.__init__(self, nome, preco, qtEstoque)
+        self.pais_origem = pais_origem
+    
+    #Método informações sendo sobrescrito (Polimorfismo):
+    def informacoes(self):
+        informacoes = [self.nome, self.preco, self.qtEstoque, self.pais_origem] 
+        print(informacoes)
+    
+    
+#Criação dos objetos e chamada de métodos:
+produto1 = Produto("Perfume", 250, 100)
+produto1.informacoes()
+produto1.vender(2)
+produto1.informacoes()
+
+produto2 = ProdutoImportado("Perfume Importado", 1500, 25, "Irlanda")
+produto2.informacoes()
+produto2.vender(1)
+produto2.informacoes()
+
+
+
+3-)
+class ContaBancaria:
+    
+    def __init__(self, titular, saldo):
+        self.titular = titular
+        self.saldo = saldo
+    
+    def depositar(self, valor):
+        self.saldo = self.saldo + valor
+        
+        if valor > 1:
+            print("Foram adicionados", valor, "reais à sua conta")
+        elif valor == 0: 
+            print("Não é possível efetuar um depósito no valor de 0 reais")
+        else: 
+            print("Foi adicionado", valor, "real à sua conta")
+            
+
+        
+    def sacar(self, valor):
+        
+        if self.saldo >= 20:
+            self.saldo = self.saldo - valor
+            print("Sacando", valor, "reais da sua conta")
+        else:
+            print("Não foi possível: O saque possui valor mínimo de 20 reais!")
+        
+    def obter_saldo(self):
+        return self.saldo
+        
+class ContaCorrente (ContaBancaria):
+    def __init__(self, titular, saldo, limite_cheque_especial):
+        ContaBancaria.__init__(self, titular, saldo)
+        self.limite_cheque_especial = limite_cheque_especial
+    
+    def usar_cheque_especial (self, valorCheque):
+        
+        if self.obter_saldo() < 20 and valorCheque <= self.limite_cheque_especial:
+            print(self.titular + ", você pode utilizar um Cheque Especial no valor de até", self.limite_cheque_especial)
+            valorCheque = int(input("Digite o valor do seu Cheque: "))
+            print("Emitindo Cheque Especial no valor de R$", valorCheque)
+        else:
+            print("Não foi possível, saque o valor da sua conta ou confira seu limite!")
+    
+
+c1 = ContaBancaria("Pedro", 2000)
+c1.depositar(20)
+c1.sacar(2020)
+c1.sacar(20)
+print(c1.obter_saldo())
+
+c2 = ContaCorrente("Thiago", 20, 2000)
+c2.depositar(0)
+c2.sacar(20)
+c2.usar_cheque_especial(2000)
+print(c2.obter_saldo())
+
+
+
